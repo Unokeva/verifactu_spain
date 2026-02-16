@@ -1,0 +1,6 @@
+/* Forzar que el QR se vea en el PDF */
+[data-fieldname="ef_qr_code"] {
+    display: block !important;
+    text-align: right;
+    margin-top: 20px;
+}

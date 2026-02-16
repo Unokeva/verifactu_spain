@@ -1,0 +1,55 @@
+<div class="print-heading">
+    <h2>Factura {{ doc.name }}</h2>
+</div>
+
+<div class="row">
+    <div class="col-xs-6">
+        <strong>Cliente:</strong> {{ doc.customer_name }}<br>
+        <strong>NIF:</strong> {{ doc.tax_id or "" }}
+    </div>
+    <div class="col-xs-6 text-right">
+        <strong>Fecha:</strong> {{ doc.get_formated("posting_date") }}
+    </div>
+</div>
+
+<table class="table table-bordered mt-4">
+    <thead>
+        <tr>
+            <th>Descripción</th>
+            <th class="text-right">Cantidad</th>
+            <th class="text-right">Precio</th>
+            <th class="text-right">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in doc.items %}
+        <tr>
+            <td>{{ item.item_name }}</td>
+            <td class="text-right">{{ item.qty }}</td>
+            <td class="text-right">{{ item.get_formatted("rate") }}</td>
+            <td class="text-right">{{ item.get_formatted("amount") }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-xs-12 text-right">
+        <h3>Total: {{ doc.get_formatted("grand_total") }}</h3>
+    </div>
+</div>
+
+<hr>
+<div class="row" style="margin-top: 50px;">
+    <div class="col-xs-8">
+        <div style="font-size: 10px;">
+            <strong>Información Legal Veri*factu:</strong><br>
+            ID Factura: {{ doc.name }}<br>
+            Hash: {{ doc.ef_hash or "No generado" }}<br>
+            Hash Anterior: {{ doc.ef_hash_anterior or "Primer Registro" }}
+        </div>
+    </div>
+    <div class="col-xs-4 text-right">
+        {{ doc.ef_qr_code or "" }}
+    </div>
+</div>

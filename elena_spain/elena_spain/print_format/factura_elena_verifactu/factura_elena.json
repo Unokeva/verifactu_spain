@@ -1,0 +1,7 @@
+{
+ "doc_type": "Sales Invoice",
+ "format_type": "Jinja",
+ "name": "Factura Elena Verifactu",
+ "print_format_type": "Server",
+ "standard": "Yes"
+}
