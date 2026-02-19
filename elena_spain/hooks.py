@@ -6,6 +6,7 @@ app_email = "javier.bogarra@gmail.com"
 app_license = "gpl-3.0"
 
 # --- EVENTOS DE DOCUMENTOS (VERIFACTU) ---
+# Asegúrate de que logic.py esté en la carpeta /verifactu/
 doc_events = {
     "Sales Invoice": {
         "on_submit": "elena_spain.verifactu.logic.calculate_hash"
@@ -13,13 +14,18 @@ doc_events = {
 }
 
 # --- INTEGRACIÓN DE SCRIPTS (ELENA AI) ---
-# Esto inyecta el código JS en el formulario de Factura de Compra automáticamente
+# Inyecta el JS automáticamente desde la nueva ruta física
 doctype_js = {
     "Purchase Invoice": "public/js/purchase_invoice.js"
 }
 
+# --- MÉTODOS DISPONIBLES (API) ---
+# ACTUALIZADO: Ahora apunta a la subcarpeta elena_ai
+whitelisted_methods = {
+    "process_invoice": "elena_spain.elena_ai.ai_logic.process_invoice_with_gemini"
+}
+
 # --- EXPORTACIÓN DE CONFIGURACIÓN (FIXTURES) ---
-# Esto asegura que tus Custom Fields y configuraciones viajen en el repositorio
 fixtures = [
     {
         "dt": "Custom Field", 
@@ -28,9 +34,9 @@ fixtures = [
     {
         "dt": "Property Setter",
         "filters": [["doc_type", "in", ["Purchase Invoice", "Sales Invoice"]]]
+    },
+    {
+        "dt": "Client Script",
+        "filters": [["module", "=", "Elena Localización España"]]
     }
 ]
-
-# --- PERMISOS Y SEGURIDAD ---
-# Las funciones de IA ya se exponen vía @frappe.whitelist() en el .py, 
-# pero aquí definimos integraciones si fueran necesarias.
