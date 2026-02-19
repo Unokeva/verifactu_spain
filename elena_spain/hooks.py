@@ -40,3 +40,4 @@ fixtures = [
         "filters": [["module", "=", "Elena Localización España"]]
     }
 ]
+fixtures = [{"dt": "Custom Field", "filters": [["module", "=", "Elena Spain"]]}]
