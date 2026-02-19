@@ -132,3 +132,18 @@ def get_or_create_vendor(nif, name):
             if not supplier:
                 return name 
     return supplier
+def process_latest_invoice():
+    import frappe
+    import os
+    latest_invoice = frappe.get_all('Purchase Invoice', fields=['name'], order_by='creation desc', limit=1)
+    if not latest_invoice:
+        print('No hay facturas.')
+        return
+    file_doc = frappe.get_all('File', filters={'attached_to_doctype': 'Purchase Invoice', 'attached_to_name': latest_invoice[0].name}, fields=['file_url'], limit=1)
+    if not file_doc:
+        print(f'Sin PDF en {latest_invoice[0].name}')
+        return
+    fname = file_doc[0].file_url.split('/')[-1]
+    fpath = os.path.join('/home/frappe/frappe-bench/sites/157.180.84.102/private/files', fname)
+    print(f'Elena trabajando... Procesando {fname}')
+    return process_invoice_with_gemini(fpath)
