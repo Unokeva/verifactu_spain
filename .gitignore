@@ -1,7 +1,12 @@
-.DS_Store
+# Gitignore Elena
 *.pyc
-*.egg-info
-*.swp
+__pycache__/
+*.so
+*.sql
+*.gz
+*.tar
+*.csv
+.env
+.DS_Store
+node_modules/
 tags
-node_modules
-__pycache__
